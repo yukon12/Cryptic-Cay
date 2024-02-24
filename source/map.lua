@@ -1,9 +1,18 @@
-require "source/matrix"
-
 Map = {}
 
-function Map.distance(c1, r1, c2, r2)
-    return math.sqrt((c1-c2)*(c1-c2)+(r1-r2)*(r1-r2))
+function Map.distance(x1, y1, x2, y2)
+    return math.sqrt((x1-x2)*(x1-x2)+(y1-y2)*(y1-y2))
+end
+
+function Map.isOnTile(x, y)
+    if x < 0 or x > MAP_SIZE or y < 0 or y > MAP_SIZE then
+        return false
+    end
+    return Map.tile[math.ceil(x)][math.ceil(y)]
+end
+
+function Map.isOnSea(x, y)
+    return not Map.isOnTile(x, y)
 end
 
 function Map.load()
@@ -35,15 +44,23 @@ function Map.load()
     end
 end
 
+function Map.drawTile(c, r)
+    if Map.tile[c][r] then
+        local offset = (c + r) % 2
+        local frame = Animation.getPhase(1, 2, offset, offset/2)
+        love.graphics.draw(Texture.sheet, Texture.grassTile[frame], T*(c-1), T*(r-1), 0, TEXTURE_SCALE, TEXTURE_SCALE)
+        return
+    end
+
+    local offset = c % 5
+    local frame = Animation.getPhase(0.5, 5, offset)
+    love.graphics.draw(Texture.sheet, Texture.sea[frame], T*(c-1), T*(r-1), 0, TEXTURE_SCALE, TEXTURE_SCALE)
+end
+
 function Map.draw()
-    love.graphics.setColor(POLYNESIAN_BLUE, 1.0)
-    love.graphics.rectangle("fill", 0, 0, T*MAP_SIZE, T*MAP_SIZE)
-    love.graphics.setColor(1.0, 1.0, 1.0, 1.0)
     for r = 1, MAP_SIZE do
         for c = 1, MAP_SIZE do
-             if Map.tile[c][r] then
-                love.graphics.draw(Texture.tile, (c-1)*T, (r-1)*T, 0, T/16, T/16)
-            end
+            Map.drawTile(c, r)
         end
     end
 end

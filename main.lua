@@ -1,16 +1,20 @@
-require "source/constants"
-require "source/map"
-require "source/camera"
-require "source/player"
-require "source/texture" 
+require "source.animation"
+require "source.camera"
+require "source.constants"
+require "source.map"
+require "source.matrix"
+require "source.player"
+require "source.texture"
 
 function love.load()
     math.randomseed(os.time())
     love.graphics.setDefaultFilter("nearest", "nearest")
-    Texture.load()
-    Map.load()
+
+    Animation.load()
     Camera.load()
+    Map.load()
     Player.load()
+    Texture.load()
 end
 
 function love.keypressed(key)
@@ -20,6 +24,7 @@ function love.keypressed(key)
 end
 
 function love.update(dt)
+    Animation.update(dt)
     Player.update(dt)
 end
 

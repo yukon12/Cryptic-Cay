@@ -1,4 +1,4 @@
-require "source/constants"
+require "source.constants"
 
 function love.conf(t)
     t.window.title = WINDOW_TITLE
