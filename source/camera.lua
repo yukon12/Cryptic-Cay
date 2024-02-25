@@ -17,3 +17,7 @@ end
 function Camera.enable()
     love.graphics.translate(Camera.horizontal, Camera.vertical)
 end
+
+function Camera.disable()
+    love.graphics.translate(-Camera.horizontal, -Camera.vertical)
+end

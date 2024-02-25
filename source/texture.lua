@@ -21,4 +21,15 @@ function Texture.load()
         love.graphics.newQuad(48, 64, 16, 16, Texture.sheet),
         love.graphics.newQuad(64, 64, 16, 16, Texture.sheet),
     }
+    Texture.coast = love.graphics.newQuad(0, 48, 16, 16, Texture.sheet)
+    Texture.grassOut = {
+        love.graphics.newQuad(48, 16, 16, 16, Texture.sheet),
+        love.graphics.newQuad(0, 32, 16, 16, Texture.sheet),
+        love.graphics.newQuad(16, 48, 16, 16, Texture.sheet),
+        love.graphics.newQuad(16, 32, 16, 16, Texture.sheet),
+        love.graphics.newQuad(32, 48, 16, 16, Texture.sheet),
+        love.graphics.newQuad(32, 32, 16, 16, Texture.sheet),
+        love.graphics.newQuad(48, 48, 16, 16, Texture.sheet),
+        love.graphics.newQuad(48, 32, 16, 16, Texture.sheet),
+    }
 end

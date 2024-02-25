@@ -10,8 +10,8 @@ end
 
 function Player.moveLeft(dt)
     Player.position.x = Player.position.x - PLAYER_SPEED*dt
-    if Map.isOnSea(Player.position.x, Player.position.y+0.25) or Map.isOnSea(Player.position.x, Player.position.y+0.75) then
-        Player.position.x = math.ceil(Player.position.x)
+    if Map.isOnSea(Player.position.x+0.125, Player.position.y+1) or Map.isOnSea(Player.position.x+0.875, Player.position.y+1) then
+        Player.position.x = math.ceil(Player.position.x)-0.125
     end
     Player.direction = false
     Player.walking = true
@@ -19,8 +19,8 @@ end
 
 function Player.moveRight(dt)
     Player.position.x = Player.position.x + PLAYER_SPEED*dt
-    if Map.isOnSea(Player.position.x+1, Player.position.y+0.25) or Map.isOnSea(Player.position.x+1, Player.position.y+0.75) then
-        Player.position.x = math.floor(Player.position.x)
+    if Map.isOnSea(Player.position.x+0.125, Player.position.y+1) or Map.isOnSea(Player.position.x+0.875, Player.position.y+1) then
+        Player.position.x = math.floor(Player.position.x)+0.125
     end
     Player.direction = true
     Player.walking = true
@@ -28,7 +28,7 @@ end
 
 function Player.moveUp(dt)
     Player.position.y = Player.position.y - PLAYER_SPEED*dt
-    if Map.isOnSea(Player.position.x+0.25, Player.position.y) or Map.isOnSea(Player.position.x+0.75, Player.position.y) then
+    if Map.isOnSea(Player.position.x+0.125, Player.position.y+1) or Map.isOnSea(Player.position.x+0.875, Player.position.y+1) then
         Player.position.y = math.ceil(Player.position.y)
     end
     Player.walking = true
@@ -36,7 +36,7 @@ end
 
 function Player.moveDown(dt)
     Player.position.y = Player.position.y + PLAYER_SPEED*dt
-    if Map.isOnSea(Player.position.x+0.25, Player.position.y+1) or Map.isOnSea(Player.position.x+0.75, Player.position.y+1) then
+    if Map.isOnSea(Player.position.x+0.125, Player.position.y+1) or Map.isOnSea(Player.position.x+0.875, Player.position.y+1) then
         Player.position.y = math.floor(Player.position.y)
     end
     Player.walking = true

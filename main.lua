@@ -3,6 +3,7 @@ require "source.camera"
 require "source.constants"
 require "source.map"
 require "source.matrix"
+require "source.minimap"
 require "source.player"
 require "source.texture"
 
@@ -33,4 +34,6 @@ function love.draw()
     Camera.enable()
     Map.draw()
     Player.draw()
+    Camera.disable()
+    Minimap.draw()
 end
