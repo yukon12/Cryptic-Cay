@@ -25,6 +25,9 @@ end
 
 function Map.load()
     Map.tile = Matrix(MAP_SIZE, MAP_SIZE, false)
+    Map.trodden = Matrix(MAP_SIZE, MAP_SIZE, false)
+    Map.object = Matrix(MAP_SIZE, MAP_SIZE, "nothing")
+
     local elevation = Matrix(MAP_SIZE, MAP_SIZE, 0)
 
     for c = 1, MAP_SIZE do
@@ -34,11 +37,11 @@ function Map.load()
     end
 
     for i = 1, 5 do
-        local cc = math.random(32, MAP_SIZE-32)
         local rc = math.random(32, MAP_SIZE-32)
+        local rr = math.random(32, MAP_SIZE-32)
         for c = 1, MAP_SIZE do
             for r = 1, MAP_SIZE do
-                elevation[c][r] = elevation[c][r] + 0.3*math.max(0, 24-Map.distance(c, r, cc, rc))
+                elevation[c][r] = elevation[c][r] + 0.3*math.max(0, 24-Map.distance(c, r, rc, rr))
             end
         end
     end
@@ -50,13 +53,58 @@ function Map.load()
             end
         end
     end
+
+    for i = 1, 64 do
+        local rc = 1
+        local rr = 1
+        while not Map.tile[rc][rr] do
+            rc = math.random(1, MAP_SIZE)
+            rr = math.random(1, MAP_SIZE)
+        end
+        local object = (rc*rr)%3
+        if object == 0 then
+            Map.object[rc][rr] = "wood"
+        elseif object == 1 then
+            Map.object[rc][rr] = "stone"
+        elseif object == 2 then
+            Map.object[rc][rr] = "weed"
+        end
+    end
+end
+
+function Map.drawObject(c, r)
+    if Map.object[c][r] == "nothing" then
+        return
+    end
+
+    if Map.object[c][r] == "wood" then
+        love.graphics.draw(Texture.sheet, Texture.wood, T*(c-1), T*(r-1), 0, TEXTURE_SCALE, TEXTURE_SCALE)
+        return
+    end
+
+    if Map.object[c][r] == "stone" then
+        love.graphics.draw(Texture.sheet, Texture.stone, T*(c-1), T*(r-1), 0, TEXTURE_SCALE, TEXTURE_SCALE)
+        return
+    end
+
+    if Map.object[c][r] == "weed" then
+        love.graphics.draw(Texture.sheet, Texture.weed, T*(c-1), T*(r-1), 0, TEXTURE_SCALE, TEXTURE_SCALE)
+        return
+    end
 end
 
 function Map.drawTile(c, r)
+    if Map.tile[c][r] and Map.trodden[c][r] then
+        love.graphics.draw(Texture.sheet, Texture.emptyTile, T*(c-1), T*(r-1), 0, TEXTURE_SCALE, TEXTURE_SCALE)
+        Map.drawObject(c, r)
+        return
+    end
+
     if Map.tile[c][r] then
         local offset = (c + r) % 2
         local frame = Animation.getPhase(1, 2, offset, offset/2)
         love.graphics.draw(Texture.sheet, Texture.grassTile[frame], T*(c-1), T*(r-1), 0, TEXTURE_SCALE, TEXTURE_SCALE)
+        Map.drawObject(c, r)
         return
     end
 

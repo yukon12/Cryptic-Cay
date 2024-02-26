@@ -32,4 +32,7 @@ function Texture.load()
         love.graphics.newQuad(48, 48, 16, 16, Texture.sheet),
         love.graphics.newQuad(48, 32, 16, 16, Texture.sheet),
     }
+    Texture.wood = love.graphics.newQuad(64, 16, 16, 16, Texture.sheet)
+    Texture.stone = love.graphics.newQuad(64, 32, 16, 16, Texture.sheet)
+    Texture.weed = love.graphics.newQuad(64, 48, 16, 16, Texture.sheet)
 end
