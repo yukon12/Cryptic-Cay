@@ -42,4 +42,5 @@ function love.draw()
     Player.draw()
     Camera.disable()
     Minimap.draw()
+    love.graphics.print(love.timer.getFPS())
 end
